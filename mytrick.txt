@@ -1,0 +1,56 @@
+var k="Иван";
+
+
+     $.ajax ({ // сам метод ajax
+      url: "ch.php",// куда отправлять 
+      type: "POST", // тип отправки
+      data: ({num1: id,num3: k}), // отправляем id и имя
+      dataType: "html", 
+      beforeSend: funcBefore, 
+      success:  function(data){// тут принимает ответ от php
+               // тут получаем ответ
+               alert(data);// должно выйти сообщение данные записаны 
+          }
+
+
+      } 
+     });
+
+
+// вот эти функция нужны чтобы всё правильно работало 
+function funcBefore () { 
+    $("#information").text ("Ожидание данных...") 
+   }
+
+   function funcSuccess (data) { 
+
+   }
+
+
+
+
+<?php 
+
+
+$mysqli = new mysqli ("localhost", "имя бд", "пар", "имя бд"); // подключение к базе данных
+
+$mysqli->query ("SET NAMES 'utf8' "); // кодировка
+
+// тут мы принимаем данные 
+
+ $w=$_POST['num1']; // id 
+ $w1=$_POST['num3']; //  имя
+
+
+
+
+
+
+$mysqli->query ("UPDATE `название таблицы` SET `name` = '$w1' WHERE `название таблицы`.`id` = $w"); // записываем данные 
+
+
+echo "данные записаны";
+
+
+$mysqli->close();// закрытие бд
+ ?>
